@@ -1,6 +1,4 @@
 import numpy as np
-# TODO
-import matplotlib.pyplot as plt 
 
 class ReseauNeurone:
     def __init__(self, nbEntrees = 2, nbCouches = 1, nbNeuronesParCouche = 4, nbSorties = 1):
