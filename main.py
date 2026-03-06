@@ -19,7 +19,7 @@ def homePage(playing):
     return playing
 
 def coliderPipe(bird, pipe, ground, stopPipe ,stopMouvePipe = True):
-    if bird.collition(ground.rect) or bird.collition(pipe.rect_bottom) or bird.collition(pipe.rect_top):
+    if bird.collition(ground.rect) or bird.collition(pipe.rect_bottom) or bird.collition(pipe.rect_top) or bird.collition(ground.rectTop):
         stopPipe = stopMouvePipe
         ground.stopAnimation()
         bird.death(ground.rect)
@@ -57,7 +57,8 @@ def main():
                     running = False
                 if event.type == KEYDOWN:
                     if event.key == K_SPACE:
-                        bird.jump()
+                        print("Jump")
+            bird.jump()
 
             if not listPipes or listPipes[-1].rect_bottom.right < WIDTH - 150 :
                 print(f"Nombre de pipe:{len(listPipes)}")
