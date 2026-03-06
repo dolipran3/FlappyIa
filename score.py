@@ -22,3 +22,25 @@ def printScore(score, screen):
         rectUnit = image.get_rect()
         rectUnit.topleft = (132, 5)
         screen.blit(image, rectUnit)
+    elif score < 100:
+        imageUnit = listImages[score % 10]
+        imageDiz = listImages[score // 10]
+        rectUnit = imageUnit.get_rect()
+        rectDiz = imageDiz.get_rect()
+        rectUnit.topleft = (132, 5)
+        rectDiz.topleft = (-rectUnit.right, 5)
+        screen.blit(imageDiz, rectDiz)
+        screen.blit(imageUnit, rectUnit)
+    elif score < 1000:
+        imageUnit = listImages[score % 10]
+        imageDiz = listImages[(score // 10) % 10]
+        imageCent = listImages[score // 100]
+        rectUnit = imageUnit.get_rect()
+        rectDiz = imageDiz.get_rect()
+        rectCent = imageCent.get_rect()
+        rectUnit.topleft = (132, 5)
+        rectDiz.topleft = (-rectUnit.right, 5)
+        rectCent.topleft = (-rectDiz.right, 5)
+        screen.blit(imageCent, rectCent)
+        screen.blit(imageDiz, rectDiz)
+        screen.blit(imageUnit, rectUnit)
