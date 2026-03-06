@@ -19,6 +19,7 @@ class Pipe:
         # Top pipe
         self.rect_top = self.image.get_rect()
         self.rect_top.bottomleft = (288, posY - SPACE_BETWEEN_PIPES)
+        
         # Score zone
         self.rect_score = pygame.Rect(self.rect_top.right, self.rect_top.bottom, 10, SPACE_BETWEEN_PIPES)
 
@@ -27,7 +28,6 @@ class Pipe:
     def draw(self, screen):
         screen.blit(self.image, self.rect_bottom)
         screen.blit(self.flipped_image, self.rect_top)
-        
         # pygame.draw.rect(screen, (255, 0, 0), self.rect_score)  # Draw the score zone for debugging
 
     def move(self):
@@ -36,9 +36,15 @@ class Pipe:
         self.rect_score = self.rect_score.move(self.speed, 0)
 
     def addScore(self, bird):
-        if bird.collition(self.rect_score):
-            bird.score += 1
-            self.rect_score.topleft = (-100, -100)  # Move the score zone out of the screen to prevent multiple scoring
+        # Vérifier si l'oiseau vient de passer le centre du pipe
+        if self.rect_score.left <= bird.rect.right <= self.rect_score.right:
+            if not bird.scoreAdded:
+                bird.score += 1
+                bird.scoreAdded = True
+        
+        # Réinitialiser le flag quand l'oiseau n'est plus dans la zone
+        if bird.rect.left > abs(self.rect_score.right):
+            bird.scoreAdded = False
 
     def setSpeed(self):
         self.speed = 0
