@@ -1,5 +1,7 @@
 import pygame
 from pygame.locals import *
+HEIGHT = 512
+WIDTH = 288
 
 class Bird:
     def __init__(self):
@@ -19,6 +21,7 @@ class Bird:
         self.jumpStrength = -4.5
         self.alive = True
         self.score = 0
+        self.scoreAdded = False
 
         self.animationCounter = 0
         self.animationSpeed = 5
@@ -52,6 +55,19 @@ class Bird:
 
     def collition(self, targetRect):
         return self.rect.colliderect(targetRect)
+    
+    #TODO: Faire une phase de normalisation des distances. 
+    def distanceToPipe(self, pipes):
+        if not pipes:
+            return (WIDTH, HEIGHT // 2)  # Distance maximale si aucun pipe n'est présent
+
+        closest_pipe = min(pipes, key=lambda pipe: abs(pipe.rect_bottom.left - self.rect.right))
+        
+        distance_x = closest_pipe.rect_bottom.left - self.rect.right
+        distance_y = (closest_pipe.rect_bottom.top + closest_pipe.rect_top.bottom) // 2 - self.rect.centery
+        
+        return (distance_x, distance_y)
+    
 
     def death(self, ground):
         self.noJump = True
@@ -59,3 +75,11 @@ class Bird:
             self.alive = False
             self.gravity = 0
             self.speed = 0
+
+    def deathModel(self):
+        self.image = pygame.Surface((self.rect.width, self.rect.height))
+        self.image.set_alpha(0)
+        self.noJump = True
+        self.alive = False
+        self.gravity = 0
+        self.speed = 0
