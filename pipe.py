@@ -10,7 +10,7 @@ class Pipe:
         self.image = pygame.image.load("Img/pipe-green.png").convert_alpha()
         self.flipped_image = pygame.transform.flip(self.image, False, True)
 
-        posY = randint(150, 400)
+        posY = randint(175, 375)
 
         # Bottom pipe
         self.rect_bottom = self.image.get_rect()
@@ -19,7 +19,7 @@ class Pipe:
         # Top pipe
         self.rect_top = self.image.get_rect()
         self.rect_top.bottomleft = (288, posY - SPACE_BETWEEN_PIPES)
-        
+
         # Score zone
         self.rect_score = pygame.Rect(self.rect_top.right, self.rect_top.bottom, 10, SPACE_BETWEEN_PIPES)
 
