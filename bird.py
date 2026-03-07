@@ -60,8 +60,11 @@ class Bird:
     def distanceToPipe(self, pipes):
         if not pipes:
             return (WIDTH, HEIGHT // 2)  # Distance maximale si aucun pipe n'est présent
+        
+        # Filtrer uniquement les pipes devant l'oiseau
+        pipes_devant = [pipe for pipe in pipes if pipe.rect_bottom.right > self.rect.left]
 
-        closest_pipe = min(pipes, key=lambda pipe: abs(pipe.rect_bottom.left - self.rect.right))
+        closest_pipe = min(pipes_devant, key=lambda pipe: pipe.rect_bottom.left - self.rect.right)
         
         distance_x = closest_pipe.rect_bottom.left - self.rect.right
         distance_y = (closest_pipe.rect_bottom.top + closest_pipe.rect_top.bottom) // 2 - self.rect.centery
